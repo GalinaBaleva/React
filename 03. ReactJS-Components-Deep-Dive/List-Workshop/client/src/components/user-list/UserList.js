@@ -3,6 +3,9 @@ import { UserItem } from "./user-item/UserItem"
 export const UserList = ({
   users,
 }) => {
+  const detailsClickHandler = (userId) => {
+    console.log(userId)
+  }
   return (
     <div className="table-wrapper">
       {/* <!-- Overlap components  -->
@@ -131,7 +134,12 @@ export const UserList = ({
           </tr>
         </thead>
         <tbody>
-          {users.map(user => <UserItem key={user._id} {...user}/>)}
+
+          {users.map(user =>
+            <tr key={user._id}>
+              <UserItem  user={user} onDetailsClick={detailsClickHandler}/>
+            </tr>)}
+
         </tbody>
       </table>
     </div>
