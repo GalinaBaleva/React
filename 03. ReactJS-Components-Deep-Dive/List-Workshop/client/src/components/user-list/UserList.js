@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import * as userService from '../../services/userService';
 
@@ -8,11 +8,19 @@ import { UserDetails } from './user-details/userDetails'
 import { UserEdit } from "./user-edit/UserEdit";
 import { UserDelete } from "./user-delete/UserDelete";
 import { UserCreate } from "./user-create/UserCreate";
+import * as userServices from '../../services/userService'
 
 
 export const UserList = ({
-  users,
+
 }) => {
+  const [users, setUsers] = useState([]);
+
+
+  useEffect(() => {
+    userServices.getAll()
+      .then(users => setUsers(users));
+  }, []);
 
   const [userAction, setUserAction] = useState({ user: null, action: null });
 
@@ -29,17 +37,75 @@ export const UserList = ({
     setUserAction({ user: null, action: null });
   };
 
+  const userCreateHandler = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const {
+      firstName,
+      lastName,
+      email,
+      imageUrl,
+      phoneNumber,
+      ...address
+    } = Object.fromEntries(formData)
+
+    const newUserData = {
+      firstName,
+      lastName,
+      email,
+      imageUrl,
+      phoneNumber,
+      address
+    };
+
+    userService.create(newUserData)
+      .then(user => {
+        setUsers(oldSate => [...oldSate, user]);
+        closeHandler();
+      });
+  };
+
+  const onEditHandler = (user,e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const {
+      firstName,
+      lastName,
+      email,
+      imageUrl,
+      phoneNumber,
+      ...address
+    } = Object.fromEntries(formData)
+
+    const newUserData = {
+      firstName,
+      lastName,
+      email,
+      imageUrl,
+      phoneNumber,
+      address
+    };
+
+    userService.edit(newUserData, user._id)
+    .then(user => {
+      setUsers(oldUsers => [...oldUsers, user]);
+      closeHandler();
+    });
+  };
+
+
   return (
     <>
       <div className="table-wrapper">
 
         {userAction.action === UserAction.Details && <UserDetails user={userAction.user} onClose={closeHandler} />}
-=
-        {userAction.action === UserAction.Edit && <UserEdit user={userAction.user} onClose={closeHandler} />}
-=
+
+        {userAction.action === UserAction.Edit && <UserEdit user={userAction.user} onClose={closeHandler} onEdit={onEditHandler} />}
+
         {userAction.action === UserAction.Delete && <UserDelete user={userAction.user} onClose={closeHandler} />}
-=
-        {userAction.action === UserAction.Add && <UserCreate onClose={closeHandler} />}
+
+        {userAction.action === UserAction.Add && <UserCreate onClose={closeHandler} onUserCreate={userCreateHandler} />}
 
         <table className="table">
           <thead>
