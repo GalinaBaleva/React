@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./App.css";
 
 function App() {
+  const infoRef = useRef();
   const [values, setValues] = useState({
     username: "",
     password: "",
@@ -10,14 +11,20 @@ function App() {
     gender: "f",
     userType: "corporate",
     tac: "",
+    egn: '',
+    eik: '',
   });
 
+  useEffect(() => {
+    if (values.username && values.age) {
+      infoRef.current.value = `${values.username} -${values.age}`
+    };
+  })
+
   const changeHandler = (e) => {
-    e.preventDefault();
     setValues((state) => ({
       ...state,
-      [e.target.name]:
-        e.target.type === "checkbox" ? e.target.checked : e.target.value,
+      [e.target.name]: e.target.type == "checkbox" ? e.target.checked : e.target.value,
     }));
   };
 
@@ -63,9 +70,9 @@ function App() {
 
           <div>
             <label htmlFor="individual-user-type">Individual:</label>
-            <input type="radio" name="userType" value="individual" id="individual-user-type" onChange={changeHandler} />
+            <input type="radio" name="userType" value="individual" id="individual-user-type" onChange={changeHandler} checked={values.userType == 'individual'} />
             <label htmlFor="corporate-user-type">Corporate:</label>
-            <input type="radio" name="userType" value="corporate" id="corpoarte-user-type" onChange={changeHandler} />
+            <input type="radio" name="userType" value="corporate" id="corpoarte-user-type" onChange={changeHandler} checked={values.userType == 'corporate'} />
           </div>
 
           <div>
@@ -74,8 +81,23 @@ function App() {
           </div>
 
           <div>
-            <input type="submit" value="Login" />
+            <label htmlFor="identifier">{values.userType == 'individual' ? 'EGN' : 'EIK'}</label>
+
+            {values.userType == 'individual'
+              ? <input type="text" id="Identifier" name="egn" value={values.egn} onChange={changeHandler} />
+              : <input type="text" id="Identifier" name="eik" value={values.eik} onChange={changeHandler} />
+            }
           </div>
+
+          <div>
+            <input type="submit" value="Register" disabled={!values.tac} />
+          </div>
+
+          <div>
+            <label htmlFor="uncontrolled-input">Uncontrolled Input</label>
+            <input type="text" name="uncontrolled" id="uncontrolled-input" ref={infoRef}/>
+          </div>
+
         </form>
       </header>
     </div>
