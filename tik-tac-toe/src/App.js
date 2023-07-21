@@ -32,11 +32,14 @@ export default function Board() {
 
     const winner = calculateWinner(squares);
     let status;
+    console.log(squares.includes(null));
 
-    if(winner){
+    if (winner) {
         status = "Winner: " + winner;
+    } else if (!squares.includes(null)) {
+        status = "No winners!";
     } else {
-        status = "Next player: " + (isXNext ? "X": "O"); 
+        status = "Next player: " + (isXNext ? "X" : "O");
     };
 
     return (
