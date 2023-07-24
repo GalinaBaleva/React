@@ -9,7 +9,8 @@ body {
   padding: 0;
   display: flex;
   justify-content: center;
-  background: lightblue;
+  background-image: url(/public/photo-1579546929518-9e396f3cc809.avif);
+  background-size: cover;
   margin-top: 5%;
   align-items: center;
 }
@@ -55,19 +56,18 @@ ul {
 
 .square {
   background: #fff;
-  border: 2px solid #999;
+  border: 2px solid #6F646F;
   float: left;
-  font-size: 24px;
   font-weight: bold;
   line-height: 34px;
-  height: 50px;
-  margin-right: -1px;
-  margin-top: -1px;
+  height: 95px;
+  margin: 1px;
   padding: 0;
   text-align: center;
-  width: 50px;
+  width: 95px;
   border-radius: 21%;
-  color: deepskyblue;
+  color: #F4346A;
+  font-size: 250%;
 }
 
 .board-row:after {
@@ -78,23 +78,34 @@ ul {
 
 .status {
   margin-bottom: 10px;
+  color: #3E333E;
+  font-size: 190%;
+  font-weight: bold;
+  text-shadow: 0.5px 0.5px white;
 }
 
 .game {
   display: flex;
   flex-direction: row;
+  margin: 10px;
+  background: #6F646F;
+  padding: 40px;
+  border-radius: 9%;
 }
 
 .game-info {
   margin-left: 20px;
+  color: #3E333E;
+  text-shadow: 0.2px 0.2px white;
 
 }
+
 button {
-  color: deepskyblue;
+  color: #3E333E;
   background-color: white;
   padding: 5px 20px;
   border-radius: 43%;
-  width: 152px;
-  border: 2px solid #999;
-
+  width: 177px;
+  border: 2px solid #6F646F;
+  font-weight: bold;
 }

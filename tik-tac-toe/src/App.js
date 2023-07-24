@@ -85,6 +85,10 @@ export default function Game() {
         } else {
             desctiption = 'Go to game start';
         };
+        
+        if(history.length-1 === move && move > 0){
+            desctiption = 'You are at move #' + move
+        };
 
         return (
             <li key={move}>
