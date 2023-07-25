@@ -1,4 +1,5 @@
-import { calculateWinner } from "../Calculator"
+import calculateWinner from "../Calculator.js";
+
 
 const Board = ({ xIsNext, squares, onPlay }) => {
     function handleClick(i) {
@@ -21,11 +22,18 @@ const Board = ({ xIsNext, squares, onPlay }) => {
     const winner = calculateWinner(squares);
     let status;
 
+    
+    
     if (winner) {
         status = "Winner: " + winner;
     } else {
         status = "Next player: " + (xIsNext ? "X" : "O");
     };
+    
+    if (!winner && !squares.includes(null)) {
+        status = 'No winners!';
+    };
+
 
     return (
         <>

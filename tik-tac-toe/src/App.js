@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Board } from './commponents/Board/Board';
+import Board from "./commponents/Board/Board";
 
 export default function Game() {
     const [history, setHistory] = useState([Array(9).fill(null)]);
@@ -14,6 +14,8 @@ export default function Game() {
     };
 
     function jumpTo(nextMove) {
+        const newHistory = history.slice(0, nextMove + 1);
+        setHistory(newHistory);
         setCurrentMove(nextMove);
     };
 
