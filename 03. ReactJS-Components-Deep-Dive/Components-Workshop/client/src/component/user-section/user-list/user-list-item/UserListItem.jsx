@@ -2,6 +2,7 @@ import { formatData } from "../../../../utils/dateUtils";
 
 export default function UserListItem({
     user,
+    onUserDetailsClick
 }) {
     return (
         <tr>
@@ -52,7 +53,7 @@ export default function UserListItem({
                         ></path>
                     </svg>
                 </button>
-                <button className="btn info-btn" title="Info">
+                <button className="btn info-btn" title="Info" onClick={() => onUserDetailsClick(user._id)}>
                     <svg
                         aria-hidden="true"
                         focusable="false"
